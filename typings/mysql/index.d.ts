@@ -1,3 +1,4 @@
+import * as crypto from 'crypto';
 
 import BaseConnection = require('./lib/Connection');
 import {ConnectionOptions, SslOptions} from './lib/Connection';
@@ -11,6 +12,7 @@ import BasePrepare = require('./lib/protocol/sequences/Prepare');
 import {QueryOptions, StreamOptions, QueryError} from './lib/protocol/sequences/Query';
 import {PrepareStatementInfo} from './lib/protocol/sequences/Prepare';
 import Server = require('./lib/Server');
+import { Pool as PromisePool } from '../../promise';
 
 export function createConnection(connectionUri: string): Connection;
 export function createConnection(config: BaseConnection.ConnectionOptions): Connection;
@@ -38,9 +40,39 @@ export {
 export * from './lib/protocol/packets/index';
 
 // Expose class interfaces
-export interface Connection extends BaseConnection {}
+export interface Connection extends BaseConnection {
+  promise(promiseImpl?: PromiseConstructor): PromisePool;
+}
 export interface PoolConnection extends BasePoolConnection {}
 export interface Pool extends BasePool {}
 export interface PoolCluster extends BasePoolCluster {}
 export interface Query extends BaseQuery {}
 export interface Prepare extends BasePrepare {}
+
+export type AuthPlugin = (pluginMetadata: {
+  connection: Connection;
+  command: string;
+}) => (
+  pluginData: Buffer
+) => Promise<string> | string | Buffer | Promise<Buffer> | null;
+
+type AuthPluginDefinition<T> = (pluginOptions?: T) => AuthPlugin
+
+export const authPlugins: {
+  caching_sha2_password: AuthPluginDefinition<{
+    overrideIsSecure?: boolean,
+    serverPublicKey?: crypto.RsaPublicKey | crypto.RsaPrivateKey | crypto.KeyLike,
+    jonServerPublicKey?: (data: Buffer) => void;
+  }>,
+  mysql_clear_password: AuthPluginDefinition<{
+    password?: string;
+  }>,
+  mysql_native_password: AuthPluginDefinition<{
+    password?: string;
+    passwordSha1?: string;
+  }>,
+  sha256_password: AuthPluginDefinition<{
+    serverPublicKey?: crypto.RsaPublicKey | crypto.RsaPrivateKey | crypto.KeyLike,
+    joinServerPublicKey?: (data: Buffer) => void;
+  }>,
+}
