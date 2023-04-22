@@ -11,6 +11,12 @@ import {EventEmitter} from 'events';
 declare namespace Connection {
 
     export interface ConnectionOptions {
+
+        /**
+         * DECIMAL and NEWDECIMAL types will be returned as numbers if this option is set to `true` ( default: `false`).
+         */
+        decimalNumbers?: boolean;
+
         /**
          * The MySQL user to authenticate as
          */
@@ -130,7 +136,7 @@ declare namespace Connection {
          * Enabling both supportBigNumbers and bigNumberStrings forces big numbers (BIGINT and DECIMAL columns) to be
          * always returned as JavaScript String objects (Default: false). Enabling supportBigNumbers but leaving
          * bigNumberStrings disabled will return big numbers as String objects only when they cannot be accurately
-         * represented with [JavaScript Number objects] (http://ecma262-5.com/ELS5_HTML.htm#Section_8.5)
+         * represented with [JavaScript Number objects](https://262.ecma-international.org/5.1/#sec-8.5)
          * (which happens when they exceed the [-2^53, +2^53] range), otherwise they will be returned as Number objects.
          * This option is ignored if supportBigNumbers is disabled.
          */
@@ -227,6 +233,17 @@ declare namespace Connection {
          * Configure the minimum supported version of SSL, the default is TLSv1.2.
          */
         minVersion?: string;
+
+        /**
+	 * Configure the maximum supported version of SSL, the default is TLSv1.3.
+         */
+        maxVersion?: string; 
+
+        /**
+         * You can verify the server name identity presented on the server certificate when connecting to a MySQL server.
+         * You should enable this but it is disabled by default right now for backwards compatibility.
+         */
+         verifyIdentity?: boolean;
     }
 }
 
@@ -272,7 +289,9 @@ declare class Connection extends EventEmitter {
 
     rollback(callback: (err: Query.QueryError | null) => void): void;
 
-    execute(sql: string, values: Array<any>, cb: (err: any, rows: Array<any>, fields: Array<any>) => any): any;
+    execute(sql: string, callback?: (err: any, rows: Array<any>, fields: Array<any>) => any): any;
+
+    execute(sql: string, values: any | any[] | { [param: string]: any }, callback?: (err: any, rows: Array<any>, fields: Array<any>) => any): any;
 
     unprepare(sql: string): any;
 

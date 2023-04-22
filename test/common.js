@@ -30,7 +30,7 @@ exports.config = config;
 exports.waitDatabaseReady = function(callback) {
   const start = Date.now();
   const tryConnect = function() {
-    const conn = exports.createConnection({ database: 'mysql' });
+    const conn = exports.createConnection({ database: 'mysql', password: process.env.MYSQL_PASSWORD });
     conn.once('error', err => {
       if (err.code !== 'PROTOCOL_CONNECTION_LOST' && err.code !== 'ETIMEDOUT') {
         console.log('Unexpected error waiting for connection', err);
@@ -54,6 +54,12 @@ exports.waitDatabaseReady = function(callback) {
 };
 
 exports.createConnection = function(args) {
+
+  const driver = require('../index.js');
+  if (!args?.port && process.env.MYSQL_CONNECTION_URL) {
+    return driver.createConnection({ ...args, uri: process.env.MYSQL_CONNECTION_URL })
+  }
+
   if (!args) {
     args = {};
   }
@@ -80,8 +86,6 @@ exports.createConnection = function(args) {
     connectTimeout: args && args.connectTimeout,
   };
 
-  // previously we had an adapter logic to benchmark against mysqljs/mysql and libmariaclient
-  const driver = require('../index.js');
   const conn = driver.createConnection(params);
   return conn;
 };
@@ -105,16 +109,24 @@ exports.getConfig = function(input) {
     timezone: args && args.timezone,
     dateStrings: args && args.dateStrings,
     authSwitchHandler: args && args.authSwitchHandler,
-    typeCast: args && args.typeCast
+    typeCast: args && args.typeCast,
+    connectionLimit: args && args.connectionLimit,
+    maxIdle: args && args.maxIdle,
+    idleTimeout: args && args.idleTimeout,
   };
   return params;
 };
 
 exports.createPool = function(args) {
+  let driver = require('../index.js');
+  if (!args?.port && process.env.MYSQL_CONNECTION_URL) {
+    return driver.createPool({ ...args, uri: process.env.MYSQL_CONNECTION_URL })
+  }
+
   if (!args) {
     args = {};
   }
-  let driver = require('../index.js');
+
   if (process.env.BENCHMARK_MYSQL1) {
     driver = require('mysql');
   }
@@ -123,9 +135,9 @@ exports.createPool = function(args) {
 };
 
 exports.createPoolCluster = function(args = {}) {
-  let driver = require('../index.js');
-  if (process.env.BENCHMARK_MYSQL1) {
-    driver = require('mysql');
+  const driver = require('../index.js');
+  if (!args?.port && process.env.MYSQL_CONNECTION_URL) {
+    return driver.createPoolCluster({ ...args, uri: process.env.MYSQL_CONNECTION_URL })
   }
   return driver.createPoolCluster(args)
 }
