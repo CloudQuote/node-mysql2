@@ -1,5 +1,260 @@
 # Changelog
 
+## [3.9.6](https://github.com/sidorares/node-mysql2/compare/v3.9.5...v3.9.6) (2024-04-18)
+
+
+### Bug Fixes
+
+* binary parser sometimes reads out of packet bounds when results contain null and typecast is false ([#2601](https://github.com/sidorares/node-mysql2/issues/2601)) ([705835d](https://github.com/sidorares/node-mysql2/commit/705835d06ff437cf0bf3169dac0a5f68002c4f87))
+
+## [3.9.5](https://github.com/sidorares/node-mysql2/compare/v3.9.4...v3.9.5) (2024-04-17)
+
+
+### Bug Fixes
+
+* revert breaking change in results creation ([#2591](https://github.com/sidorares/node-mysql2/issues/2591)) ([f7c60d0](https://github.com/sidorares/node-mysql2/commit/f7c60d01a49666130f51d3847ccfdd3d6e3d33e9))
+
+## [3.9.4](https://github.com/sidorares/node-mysql2/compare/v3.9.3...v3.9.4) (2024-04-09)
+
+
+### Bug Fixes
+
+* **docs:** improve the contribution guidelines ([#2552](https://github.com/sidorares/node-mysql2/issues/2552)) ([8a818ce](https://github.com/sidorares/node-mysql2/commit/8a818ce0f30654eba854759e6409c0ac856fc448))
+* **security:** improve results object creation ([#2574](https://github.com/sidorares/node-mysql2/issues/2574)) ([4a964a3](https://github.com/sidorares/node-mysql2/commit/4a964a3910a4b8de008696c554ab1b492e9b4691))
+* **security:** improve supportBigNumbers and bigNumberStrings sanitization ([#2572](https://github.com/sidorares/node-mysql2/issues/2572)) ([74abf9e](https://github.com/sidorares/node-mysql2/commit/74abf9ef94d76114d9a09415e28b496522a94805))
+
+## [3.9.3](https://github.com/sidorares/node-mysql2/compare/v3.9.2...v3.9.3) (2024-03-26)
+
+
+### Bug Fixes
+
+* **security:** improve cache key formation ([#2424](https://github.com/sidorares/node-mysql2/issues/2424)) ([0d54b0c](https://github.com/sidorares/node-mysql2/commit/0d54b0ca6498c823098426038162ef10df02c818))
+  * Fixes a potential parser cache poisoning attack vulnerability reported by Vsevolod Kokorin (Slonser) of Solidlab
+* update Amazon RDS SSL CA cert ([#2131](https://github.com/sidorares/node-mysql2/pull/2131)) ([d9dccfd](https://github.com/sidorares/node-mysql2/commit/d9dccfd837d701f377574b85a05586be89015460))
+
+## [3.9.2](https://github.com/sidorares/node-mysql2/compare/v3.9.1...v3.9.2) (2024-02-26)
+
+
+### Bug Fixes
+
+* **stream:** premature close when it is paused ([#2416](https://github.com/sidorares/node-mysql2/issues/2416)) ([7c6bc64](https://github.com/sidorares/node-mysql2/commit/7c6bc642addb3e6fee1b1fdc84f83a72ff11ca4a))
+* **types:** expose TypeCast types ([#2425](https://github.com/sidorares/node-mysql2/issues/2425)) ([336a7f1](https://github.com/sidorares/node-mysql2/commit/336a7f1259c63d2dfe070fe400b141e89255844e))
+
+## [3.9.1](https://github.com/sidorares/node-mysql2/compare/v3.9.0...v3.9.1) (2024-01-29)
+
+
+### Bug Fixes
+
+* **types:** support encoding for string type cast ([#2407](https://github.com/sidorares/node-mysql2/issues/2407)) ([1dc2011](https://github.com/sidorares/node-mysql2/commit/1dc201144daceab0b12193ada0f13dbb25e917f6))
+
+## [3.9.0](https://github.com/sidorares/node-mysql2/compare/v3.8.0...v3.9.0) (2024-01-26)
+
+
+### Features
+
+* introduce typeCast for `execute` method ([#2398](https://github.com/sidorares/node-mysql2/issues/2398)) ([baaa92a](https://github.com/sidorares/node-mysql2/commit/baaa92a228d32012f7da07826674f7a736e3791d))
+
+## [3.8.0](https://github.com/sidorares/node-mysql2/compare/v3.7.1...v3.8.0) (2024-01-23)
+
+
+### Features
+
+* **perf:** cache iconv decoder ([#2391](https://github.com/sidorares/node-mysql2/issues/2391)) ([b95b3db](https://github.com/sidorares/node-mysql2/commit/b95b3dbe4bb34e36d0d1be6948e4d8a169d28eed))
+
+
+### Bug Fixes
+
+* **stream:** premature close when using `for await` ([#2389](https://github.com/sidorares/node-mysql2/issues/2389)) ([af47148](https://github.com/sidorares/node-mysql2/commit/af4714845603f70e3c1ef635f6c0750ff1987a9e))
+* The removeIdleTimeoutConnectionsTimer did not clean up when the … ([#2384](https://github.com/sidorares/node-mysql2/issues/2384)) ([18a44f6](https://github.com/sidorares/node-mysql2/commit/18a44f6a0a0b7ef41cc874d7a7bb2d3db83ea533))
+* **types:** add missing types to TypeCast ([#2390](https://github.com/sidorares/node-mysql2/issues/2390)) ([78ce495](https://github.com/sidorares/node-mysql2/commit/78ce4953e9c66d6cf40ffc2d252fa3701a2d4fe2))
+
+## [3.7.1](https://github.com/sidorares/node-mysql2/compare/v3.7.0...v3.7.1) (2024-01-17)
+
+
+### Bug Fixes
+
+* add condition which allows code in callback to be reachable ([#2376](https://github.com/sidorares/node-mysql2/issues/2376)) ([8d5b903](https://github.com/sidorares/node-mysql2/commit/8d5b903f5c24ef6378d4aa98d3fd4e13d39be4db))
+
+## [3.7.0](https://github.com/sidorares/node-mysql2/compare/v3.6.5...v3.7.0) (2024-01-07)
+
+
+### Features
+
+* **docs:** release documentation website ([#2339](https://github.com/sidorares/node-mysql2/issues/2339)) ([c0d77c0](https://github.com/sidorares/node-mysql2/commit/c0d77c02d2f4ad22b46a712d270fc2654d26de4e))
+
+## [3.6.5](https://github.com/sidorares/node-mysql2/compare/v3.6.4...v3.6.5) (2023-11-22)
+
+
+### Bug Fixes
+
+* add decodeuricomponent to parse uri encoded special characters in host, username, password and datbase keys ([#2277](https://github.com/sidorares/node-mysql2/issues/2277)) ([fe573ad](https://github.com/sidorares/node-mysql2/commit/fe573addffa64a842ae37994fcd8879cefa933f2))
+
+## [3.6.4](https://github.com/sidorares/node-mysql2/compare/v3.6.3...v3.6.4) (2023-11-21)
+
+
+### Bug Fixes
+
+* malformed FieldPacket ([#2280](https://github.com/sidorares/node-mysql2/issues/2280)) ([8831e09](https://github.com/sidorares/node-mysql2/commit/8831e092024f8d26fe9272adec8e1a5f115735aa))
+* move missing options to `ConnectionOptions ` ([#2288](https://github.com/sidorares/node-mysql2/issues/2288)) ([5cd7639](https://github.com/sidorares/node-mysql2/commit/5cd76396d962da070452800597a6f86829b35bd4))
+
+## [3.6.3](https://github.com/sidorares/node-mysql2/compare/v3.6.2...v3.6.3) (2023-11-03)
+
+
+### Bug Fixes
+
+* correctly pass values when used with sql-template-strings library ([#2266](https://github.com/sidorares/node-mysql2/issues/2266)) ([6444f99](https://github.com/sidorares/node-mysql2/commit/6444f9953ddb08b1b98cd0d7eb0d939d25d3971a))
+
+## [3.6.2](https://github.com/sidorares/node-mysql2/compare/v3.6.1...v3.6.2) (2023-10-15)
+
+
+### Bug Fixes
+
+* sql-template-strings/tag compatibility ([#2238](https://github.com/sidorares/node-mysql2/issues/2238)) ([f2efe5a](https://github.com/sidorares/node-mysql2/commit/f2efe5a2ddf9e10a83bf24da2af744061b2ae597))
+
+## [3.6.1](https://github.com/sidorares/node-mysql2/compare/v3.6.0...v3.6.1) (2023-09-06)
+
+
+### Bug Fixes
+
+* EventEmitter on method signatures to use spread syntax ([#2200](https://github.com/sidorares/node-mysql2/issues/2200)) ([5d21b81](https://github.com/sidorares/node-mysql2/commit/5d21b8127b8b6aa4b0308b6482d707d150403990))
+
+## [3.6.0](https://github.com/sidorares/node-mysql2/compare/v3.5.2...v3.6.0) (2023-08-04)
+
+
+### Features
+
+* add conn-level `infileStreamFactory` option ([#2159](https://github.com/sidorares/node-mysql2/issues/2159)) ([5bed0f8](https://github.com/sidorares/node-mysql2/commit/5bed0f8f195f615844d5dbe322ebfe47b76ba2f5))
+
+## [3.5.2](https://github.com/sidorares/node-mysql2/compare/v3.5.1...v3.5.2) (2023-07-14)
+
+
+### Bug Fixes
+
+* Update events that are propagated from pool cluster to include remove ([#2114](https://github.com/sidorares/node-mysql2/issues/2114)) ([927d209](https://github.com/sidorares/node-mysql2/commit/927d20945d664c55209fd95b05b2c68904f51acc))
+
+## [3.5.1](https://github.com/sidorares/node-mysql2/compare/v3.5.0...v3.5.1) (2023-07-10)
+
+
+### Bug Fixes
+
+* improvements to allow to use Bun and tls  ([#2119](https://github.com/sidorares/node-mysql2/issues/2119)) ([fd44a2a](https://github.com/sidorares/node-mysql2/commit/fd44a2ab9c08961a898edcfef5ba0035467a28ce))
+* missing `ResultSetHeader[]` to `query` and `execute` ([f649486](https://github.com/sidorares/node-mysql2/commit/f649486fdd0e95ad9f46c002e385986b52224f68))
+
+## [3.5.0](https://github.com/sidorares/node-mysql2/compare/v3.4.5...v3.5.0) (2023-07-06)
+
+
+### Features
+
+* improved inspection of columns ([#2112](https://github.com/sidorares/node-mysql2/issues/2112)) ([69277aa](https://github.com/sidorares/node-mysql2/commit/69277aa0430d951d61c485d2cd228c3cd9d4a33c))
+
+## [3.4.5](https://github.com/sidorares/node-mysql2/compare/v3.4.4...v3.4.5) (2023-07-05)
+
+
+### Bug Fixes
+
+* handle prepare response with actual number of parameter definition less than reported in the prepare header. Fixes [#2052](https://github.com/sidorares/node-mysql2/issues/2052) ([b658be0](https://github.com/sidorares/node-mysql2/commit/b658be0cfbfdec378d71a9d9e70de4a52180cd2d))
+
+## [3.4.4](https://github.com/sidorares/node-mysql2/compare/v3.4.3...v3.4.4) (2023-07-04)
+
+
+### Bug Fixes
+
+* add `ProcedureCallPacket` to `execute` overloads ([3566ef7](https://github.com/sidorares/node-mysql2/commit/3566ef77a1a45d2cb18b1e32e0a5f4fc325a26cd))
+* add `ProcedureCallPacket` to `query` overloads ([352c3bc](https://github.com/sidorares/node-mysql2/commit/352c3bc5504d6cb8d9837771a2fa8673db7eb001))
+* add `ProcedureCallPacket` to promise-based `execute` overloads ([8292416](https://github.com/sidorares/node-mysql2/commit/829241604cfd4cd45b6f5bfd7c36082287da5ca0))
+* add `ProcedureCallPacket` to promise-based `query` overloads ([0f31a41](https://github.com/sidorares/node-mysql2/commit/0f31a41dcfe65d2953447c7f1a8b5c892f2ceed9))
+* create `ProcedureCallPacket` typings ([09ad1d2](https://github.com/sidorares/node-mysql2/commit/09ad1d276fcad6c9e3963d54b56c39c26a57b690))
+
+## [3.4.3](https://github.com/sidorares/node-mysql2/compare/v3.4.2...v3.4.3) (2023-06-30)
+
+
+### Bug Fixes
+
+* remove acquireTimeout invalid option ([#2095](https://github.com/sidorares/node-mysql2/issues/2095)) ([eb311db](https://github.com/sidorares/node-mysql2/commit/eb311dbb988a4d3adada9774d43a79806a453745))
+
+## [3.4.2](https://github.com/sidorares/node-mysql2/compare/v3.4.1...v3.4.2) (2023-06-26)
+
+
+### Bug Fixes
+
+* changing type files to declaration type files ([98e6f3a](https://github.com/sidorares/node-mysql2/commit/98e6f3a0b1f2d523dc8cb62c67e49d9589c469eb))
+
+## [3.4.1](https://github.com/sidorares/node-mysql2/compare/v3.4.0...v3.4.1) (2023-06-24)
+
+
+### Bug Fixes
+
+* `createPool` uri overload ([98623dd](https://github.com/sidorares/node-mysql2/commit/98623dd7fc82cfbe556fc4b92828d382b86625d8))
+* `PoolCluster` typings ([3902ca6](https://github.com/sidorares/node-mysql2/commit/3902ca6534fd64a798c5b2dc29402fe396d4a67c))
+* create promise-based `PoolCluster` typings ([7f38496](https://github.com/sidorares/node-mysql2/commit/7f38496097fa6d9cfbced604fe0ddc392b1b1979))
+* missing `parserCache` in `promise.js` ([7f35cf5](https://github.com/sidorares/node-mysql2/commit/7f35cf5f6e69cc8aa3d2008bf5b0434c4d7ee5ac))
+* missing constants in `promise.js` ([4ce2c70](https://github.com/sidorares/node-mysql2/commit/4ce2c70313ecbe2c4c5fd73f34b4ce7d32a9c83c))
+* missing keys for `Types` constant ([86655ec](https://github.com/sidorares/node-mysql2/commit/86655ec6ad8ab8deae11a3c4919ae2ee553f4120))
+* missing typings for `Charsets` constants ([01f77a0](https://github.com/sidorares/node-mysql2/commit/01f77a0db471682e7c4f523bde1189fc5d11d43d))
+* missing typings for `CharsetToEncoding` constants ([609229a](https://github.com/sidorares/node-mysql2/commit/609229a973031615cb93b5678b5932cf3714480f))
+* missing typings for `parserCache` ([891a523](https://github.com/sidorares/node-mysql2/commit/891a523939120666e8d85db634262889657aff45))
+* missing typings for `Types` constant ([04601dd](https://github.com/sidorares/node-mysql2/commit/04601ddbd1430b37a7a7ab8d8d63ad27bd00bb54))
+* rename file of typings `Charsets` constants ([51c4196](https://github.com/sidorares/node-mysql2/commit/51c4196d50472eb18e440ea0291f2b571a3e7585))
+
+## [3.4.0](https://github.com/sidorares/node-mysql2/compare/v3.3.5...v3.4.0) (2023-06-19)
+
+
+### Features
+
+* support STATE_GTIDS session track information ([2b1520f](https://github.com/sidorares/node-mysql2/commit/2b1520f4c5c11cda30d69e8b8b20ff03ec469099))
+
+## [3.3.5](https://github.com/sidorares/node-mysql2/compare/v3.3.4...v3.3.5) (2023-06-12)
+
+
+### Bug Fixes
+
+* `createPool` `promise` as `PromisePool` ([#2060](https://github.com/sidorares/node-mysql2/issues/2060)) ([ff3c36c](https://github.com/sidorares/node-mysql2/commit/ff3c36ca8b092f8ab16fc81400f6c63524cd971d))
+* keepAliveInitialDelay not taking effect ([#2043](https://github.com/sidorares/node-mysql2/issues/2043)) ([585911c](https://github.com/sidorares/node-mysql2/commit/585911c5d5d4b933e32e5a646574af222b63f530))
+
+## [3.3.4](https://github.com/sidorares/node-mysql2/compare/v3.3.3...v3.3.4) (2023-06-11)
+
+
+### Bug Fixes
+
+* `PromisePoolConnection` import name ([76db54a](https://github.com/sidorares/node-mysql2/commit/76db54a91e2f9861605d5975158701233879d02c))
+* `releaseConnection` types and promise ([4aac9d6](https://github.com/sidorares/node-mysql2/commit/4aac9d6a1b379253fa90195ffdc98886b3b87a1b))
+
+## [3.3.3](https://github.com/sidorares/node-mysql2/compare/v3.3.2...v3.3.3) (2023-05-27)
+
+
+### Bug Fixes
+
+* add package.json to exports ([#2026](https://github.com/sidorares/node-mysql2/issues/2026)) ([09fd305](https://github.com/sidorares/node-mysql2/commit/09fd3059cd91c655e494e40dc4365e58ed069b13))
+
+## [3.3.2](https://github.com/sidorares/node-mysql2/compare/v3.3.1...v3.3.2) (2023-05-23)
+
+
+### Bug Fixes
+
+* respect enableKeepAlive option ([#2016](https://github.com/sidorares/node-mysql2/issues/2016)) ([f465c3e](https://github.com/sidorares/node-mysql2/commit/f465c3edc707d34a11d9b1796b9472824fdb35df))
+
+## [3.3.1](https://github.com/sidorares/node-mysql2/compare/v3.3.0...v3.3.1) (2023-05-11)
+
+
+### Bug Fixes
+
+* LRU constructor ([#2004](https://github.com/sidorares/node-mysql2/issues/2004)) ([fd3d117](https://github.com/sidorares/node-mysql2/commit/fd3d117da82cc5c5fa5a3701d7b33ca77691bc61))
+* Missing types in "mysql" import ([#1995](https://github.com/sidorares/node-mysql2/issues/1995)) ([b8c79d0](https://github.com/sidorares/node-mysql2/commit/b8c79d055762e927da147d08fb375cd11d303868))
+
+## [3.3.0](https://github.com/sidorares/node-mysql2/compare/v3.2.4...v3.3.0) (2023-05-06)
+
+
+### Features
+
+* Added updated/new error codes gathered from MySQL 8.0 source code ([#1990](https://github.com/sidorares/node-mysql2/issues/1990)) ([85dc6e5](https://github.com/sidorares/node-mysql2/commit/85dc6e56310db1d78078588f48714f574873eec3))
+
+## [3.2.4](https://github.com/sidorares/node-mysql2/compare/v3.2.3...v3.2.4) (2023-04-25)
+
+
+### Bug Fixes
+
+* **server:** Added missing encoding argument to server-handshake ([#1976](https://github.com/sidorares/node-mysql2/issues/1976)) ([a4b6b22](https://github.com/sidorares/node-mysql2/commit/a4b6b223434d1cbdb5af9141cf3bd085459bb6b8))
+
 ## [3.2.3](https://github.com/sidorares/node-mysql2/compare/v3.2.2...v3.2.3) (2023-04-16)
 
 
@@ -90,36 +345,36 @@
 
 3.0.0-rc.1 ( 6/11/2021 )
   - fix .ping() return value signature #1650
-  - documentation: clarify `SUM()` and `AVG()` 
+  - documentation: clarify `SUM()` and `AVG()`
     return types difference with mysqljs/myql    #1649
   - misc: add release-please action              #1631, #1647
-  - fix: .end() callback is not called 
+  - fix: .end() callback is not called
     when connection is in closed state           #1642, #1638
   - typescript: getConnection typings fix        #1620
   - fix uncatchable exception                    #1359
   - add mysql_clear_password built in support    #1552
-  - typescript: typings unit test, variouts type 
+  - typescript: typings unit test, variouts type
     improvements, server protocol additions      #1610, #1610
-  - typescript: more complete way of adding 
+  - typescript: more complete way of adding
     typings for the Server module                #1606
-  - typescript, documentation: improve prepared 
+  - typescript, documentation: improve prepared
     typings statements                           #1493
-  - typescript: add type declarations for Prepare 
+  - typescript: add type declarations for Prepare
     & PrepareStatementInfo                       #1565
-  - fix: webpack projects no longer show warning 
+  - fix: webpack projects no longer show warning
     for cardinal dependency                      #1589
-  - typescript: accept Buffer and Buffer[] in 
+  - typescript: accept Buffer and Buffer[] in
     typings for key, cert, and ca                #1599
-  - fix: use rotatingXor instead of xor in 
+  - fix: use rotatingXor instead of xor in
     sha256_password plugin                       #1592, #1044
   - documentation: add Simplified Chinese        #1572
   - fix: add type as an alias to columnType      #1546, #1549
   - Update collation list up to MySQL 8.0.26     #1410
   - typescript: Add minVersion for ssl option.   #1517
   - Add support for multi-factor authentication  #1436
-  - typescript: add namedPlaceholders option to 
+  - typescript: add namedPlaceholders option to
     QueryOptions interface                       #1475
-  - fix: update how the ECONNRESET error is 
+  - fix: update how the ECONNRESET error is
     caught when connection already closing       #1438
 
 
@@ -127,13 +382,13 @@
   - no changes compared to 2.3.3-rc.0
 
 2.3.3-rc.0 ( 5/11/2021 )
-  - fix ColumnDefinition.db is broken when 
-    encoding is not utf-8                         #1423                 
+  - fix ColumnDefinition.db is broken when
+    encoding is not utf-8                         #1423
   - typeCast: Fix field.length to be number       #1427, #1426
   - initiall support for coverage reporting in CI #1425
   - fix performance regression for results with   #1445, #1432
-    large (300+) number of columns                
-                                                  
+    large (300+) number of columns
+
 
 2.3.2 ( 16/10/2021 )
   - fix regression causing typeCast + JSON field
@@ -142,34 +397,34 @@
 2.3.1 ( 15/10/2021 )
   - Update error codes up to mysql 8.0.26          #1411
   - perf: optimize Query.row call                  #1408
-  - build: update to node 12/14/16, migrate from 
+  - build: update to node 12/14/16, migrate from
     travis-ci and appveyor to GH actions, add perf
     benchmarking workflow                          #1406, #1399
   - perf: avoid leaking TextRow/BinaryRow object   #1402
-  - perf: optimize string decoding by removing 
+  - perf: optimize string decoding by removing
     the use of slice()                             #1401
   - perf: cache lazy-evaluated fields              #1400
   - fix: clear timeout after error                 #1390
-  - TS: adds the optional column changedRows to 
+  - TS: adds the optional column changedRows to
     ResultSetHeader                                #1377
 
 2.3.0 ( 5/08/2021 )
   - Add PoolCluster promise wrappers               #1369, #1363
   - support for connect and query timeouts         #1364
   - add missing query() method on PoolCluster      #1362
-  - fix incorrect parsing of passwords 
+  - fix incorrect parsing of passwords
     containing ":"                                 #1357
-  - handle errors generated by asynchronous 
+  - handle errors generated by asynchronous
     authentication plugins                         #1354
   - add proper handshake fatal error handling      #1352
-  - fix tests to work with the latest MySQL 
+  - fix tests to work with the latest MySQL
     server versions (up to 8.0.25)                 #1338
   - expose SQL query in errors                     #1295
   - typing and readme docs for rowAsArray          #1288
-  - allow unnamed placeholders even if the 
+  - allow unnamed placeholders even if the
     namedPlaceholders flag is enabled              #1251
   - better ESM support                             #1217
-  
+
 2.2.5 ( 21/09/2020 )
   - typings: add ResultSetHeader                   #1213
 
@@ -183,18 +438,18 @@
   - Add the authPlugins types to ConnectionOptions #1206
 
 2.2.1 ( 18/09/2020 )
-  - update package.json files entry to include 
+  - update package.json files entry to include
     type definition files                          #1205
 
 2.2.0 ( 18/09/2020 )
   - added TS type definitions                      #1204, #1028
-  - better error handling for invalid JSON row 
+  - better error handling for invalid JSON row
     responses                                      #915
   - fix for iconv-lite and some bundlers issues    #1187
   - error early when callbacks incorrectly passed  #1025
     to a promise wrapper
   - add support for sha256_password authentication #1153, #1152
-    plugin                                          
+    plugin
   - handle backpressure when loading data from     #1167
     file
   - Pass in the callback when ending the pool      #1170
@@ -215,26 +470,26 @@
   - added `enableKeepAlive` connection option      #1081, #683
 
 2.0.2
-  - Fix for clearing connection timeout state when 
+  - Fix for clearing connection timeout state when
     connection is re-attempted (failure or success) #1075
   - Avoid setting numeric config options to NaN     #1074, #721
   - PoolCluster#end now accepts a callback function #1065, #1063
 
 2.0.1
-  - Add missing authPlugins assignment in 
+  - Add missing authPlugins assignment in
     ConnectionConfig                                 #1052
-  - Fix 4.1 auth on old servers not 
+  - Fix 4.1 auth on old servers not
     supporting PLUGIN_AUTH                           #1062, #1054, #1053
 
 2.0.0
-  - Mysql8 caching_sha2_password - fix bug in 
-    authenticating when password is longer 
+  - Mysql8 caching_sha2_password - fix bug in
+    authenticating when password is longer
     than 19 chars                                     #1044 #1045
   - Support ConnectionConfig.flags as an array        #1003
 
 2.0.0-alpha1
-  - MAJOR: new `authPlugins` api replacing 
-    `authSwitchHandler`, added caching_sha2_password 
+  - MAJOR: new `authPlugins` api replacing
+    `authSwitchHandler`, added caching_sha2_password
     and mysql_native_password as default plugins.
     Added tests for mysql 8 and ssl. Mysql 8 server
     now supported with default settings.              #1021, #906, #991
@@ -246,16 +501,16 @@
   - fix pool ignoring namedPlaceholders config        #1022
 
 1.7.0
-  - Fix crashing when session info packet does not 
+  - Fix crashing when session info packet does not
     start with length-coded string                    #1004, #989
   - build: drop node 4 and 6 and add node v12         #997
-  - Add support for timezone connection option        #996, #15, #262, 
+  - Add support for timezone connection option        #996, #15, #262,
                                                       #642, #877, #888
-  - Make mysql2 compatible with minification          #992, #890, #899, 
+  - Make mysql2 compatible with minification          #992, #890, #899,
                                                       #890
   - fix serialisation of '00:00:00' time              #968, #967
   - Allow to set minVersion ssl option                #961, #960
-  - Fix a MaxListenersExceededWarning with stream 
+  - Fix a MaxListenersExceededWarning with stream
     local infile                                      #965
 
 1.6.5 (08/02/2019)
@@ -266,7 +521,7 @@
   - fix(debug): remove usage of callee                #882
 
 1.6.4 (08/11/2018)
- - revert changes breaking node v4 and add v4 to 
+ - revert changes breaking node v4 and add v4 to
    build matrix                                       #872, #873
 
 1.6.3 (06/10/2018)
@@ -286,7 +541,7 @@
  - Fixed `PromiseConnection.ping()` ignoring errors   #813
  - Added a uri parameter to the connection config     #815
  - Added a `.promise()` method shortcut on Pool,
-   Connection and PoolConnection                      #810 
+   Connection and PoolConnection                      #810
  - Added more functions from node-mysql:
    `createQuery`, `raw`, `escape`, `escapeId`,
    `format`                                           #799
@@ -302,7 +557,7 @@
  - use strich lru-cache version                        #751
  - bump sqlstring to 2.3.1
  - remove noAssert flag from Buffer functions          #748
- 
+
 1.5.2 (06/02/2018)
  - perf: Store Compiled Packet Parsers in a global
    cache                                               #722, #723
@@ -322,7 +577,7 @@
 1.5.0 (13/11/2017)
  - Added sqlMessage to Error callback object           #665
  - Normalized sqlState to a string of 5 chars          #667
-   as Mysql specifies it  
+   as Mysql specifies it
  - Remove destroyed promise pool connections from
    pool                                                #674, #672
  - Expose escape & format methods on connection pool   #669, #663

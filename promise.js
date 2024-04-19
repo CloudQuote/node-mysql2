@@ -2,9 +2,10 @@
 
 const core = require('./index.js');
 const EventEmitter = require('events').EventEmitter;
+const parserCache = require('./lib/parsers/parser_cache.js');
 
 function makeDoneCb(resolve, reject, localErr) {
-  return function (err, rows, fields) {
+  return function(err, rows, fields) {
     if (err) {
       localErr.message = err.message;
       localErr.code = err.code;
@@ -26,7 +27,7 @@ function inheritEvents(source, target, events) {
       if (events.indexOf(eventName) >= 0 && !target.listenerCount(eventName)) {
         source.on(
           eventName,
-          (listeners[eventName] = function () {
+          (listeners[eventName] = function() {
             const args = [].slice.call(arguments);
             args.unshift(eventName);
 
@@ -254,8 +255,8 @@ function createConnection(opts) {
   if (!thePromise) {
     throw new Error(
       'no Promise implementation available.' +
-      'Use promise-enabled node version or pass userland Promise' +
-      " implementation as parameter, for example: { Promise: require('bluebird') }"
+        'Use promise-enabled node version or pass userland Promise' +
+        " implementation as parameter, for example: { Promise: require('bluebird') }"
     );
   }
   return new thePromise((resolve, reject) => {
@@ -280,7 +281,7 @@ function createConnection(opts) {
 // implemented with PromiseConnection
 
 // proxy synchronous functions only
-(function (functionsToWrap) {
+(function(functionsToWrap) {
   for (let i = 0; functionsToWrap && i < functionsToWrap.length; i++) {
     const func = functionsToWrap[i];
 
@@ -289,7 +290,7 @@ function createConnection(opts) {
       PromiseConnection.prototype[func] === undefined
     ) {
       PromiseConnection.prototype[func] = (function factory(funcName) {
-        return function () {
+        return function() {
           return core.Connection.prototype[funcName].apply(
             this.connection,
             arguments
@@ -344,6 +345,10 @@ class PromisePool extends EventEmitter {
         }
       });
     });
+  }
+
+  releaseConnection(connection) {
+    if (connection instanceof PromisePoolConnection) connection.release();
   }
 
   query(sql, args) {
@@ -408,15 +413,15 @@ function createPool(opts) {
   if (!thePromise) {
     throw new Error(
       'no Promise implementation available.' +
-      'Use promise-enabled node version or pass userland Promise' +
-      " implementation as parameter, for example: { Promise: require('bluebird') }"
+        'Use promise-enabled node version or pass userland Promise' +
+        " implementation as parameter, for example: { Promise: require('bluebird') }"
     );
   }
 
   return new PromisePool(corePool, thePromise);
 }
 
-(function (functionsToWrap) {
+(function(functionsToWrap) {
   for (let i = 0; functionsToWrap && i < functionsToWrap.length; i++) {
     const func = functionsToWrap[i];
 
@@ -425,7 +430,7 @@ function createPool(opts) {
       PromisePool.prototype[func] === undefined
     ) {
       PromisePool.prototype[func] = (function factory(funcName) {
-        return function () {
+        return function() {
           return core.Pool.prototype[funcName].apply(this.pool, arguments);
         };
       })(func);
@@ -443,7 +448,7 @@ class PromisePoolCluster extends EventEmitter {
     super();
     this.poolCluster = poolCluster;
     this.Promise = thePromise || Promise;
-    inheritEvents(poolCluster, this, ['acquire', 'connection', 'enqueue', 'release']);
+    inheritEvents(poolCluster, this, ['warn', 'remove']);
   }
 
   getConnection() {
@@ -517,7 +522,7 @@ class PromisePoolCluster extends EventEmitter {
 /**
  * proxy poolCluster synchronous functions
  */
-(function (functionsToWrap) {
+(function(functionsToWrap) {
   for (let i = 0; functionsToWrap && i < functionsToWrap.length; i++) {
     const func = functionsToWrap[i];
 
@@ -526,15 +531,16 @@ class PromisePoolCluster extends EventEmitter {
       PromisePoolCluster.prototype[func] === undefined
     ) {
       PromisePoolCluster.prototype[func] = (function factory(funcName) {
-        return function () {
-          return core.PoolCluster.prototype[funcName].apply(this.poolCluster, arguments);
+        return function() {
+          return core.PoolCluster.prototype[funcName].apply(
+            this.poolCluster,
+            arguments
+          );
         };
       })(func);
     }
   }
-})([
-  'add'
-]);
+})(['add']);
 
 function createPoolCluster(opts) {
   const corePoolCluster = core.createPoolCluster(opts);
@@ -542,8 +548,8 @@ function createPoolCluster(opts) {
   if (!thePromise) {
     throw new Error(
       'no Promise implementation available.' +
-      'Use promise-enabled node version or pass userland Promise' +
-      " implementation as parameter, for example: { Promise: require('bluebird') }"
+        'Use promise-enabled node version or pass userland Promise' +
+        " implementation as parameter, for example: { Promise: require('bluebird') }"
     );
   }
   return new PromisePoolCluster(corePoolCluster, thePromise);
@@ -559,3 +565,21 @@ exports.raw = core.raw;
 exports.PromisePool = PromisePool;
 exports.PromiseConnection = PromiseConnection;
 exports.PromisePoolConnection = PromisePoolConnection;
+
+exports.__defineGetter__('Types', () => require('./lib/constants/types.js'));
+
+exports.__defineGetter__('Charsets', () =>
+  require('./lib/constants/charsets.js')
+);
+
+exports.__defineGetter__('CharsetToEncoding', () =>
+  require('./lib/constants/charset_encodings.js')
+);
+
+exports.setMaxParserCache = function(max) {
+  parserCache.setMaxCache(max);
+};
+
+exports.clearParserCache = function() {
+  parserCache.clearCache();
+};
