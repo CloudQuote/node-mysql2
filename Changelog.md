@@ -1,5 +1,94 @@
 # Changelog
 
+## [3.17.0](https://github.com/CloudQuote/node-mysql2/compare/v3.24.6...v3.17.0) (2026-10-21)
+
+
+### Features
+
+* add `Symbol.dispose` and `Symbol.asyncDispose` support for Connections, Pools, and Pool Clusters ([#4112](https://github.com/CloudQuote/node-mysql2/issues/4112)) ([1e612dc](https://github.com/CloudQuote/node-mysql2/commit/1e612dc615c4fcfe4bf41079d689c690ac717b66))
+* add support for query attributes ([#4223](https://github.com/CloudQuote/node-mysql2/issues/4223)) ([d732f78](https://github.com/CloudQuote/node-mysql2/commit/d732f78088b6fbe1d7454224035f1533cdc103da))
+* add TracingChannel support for native APM instrumentation ([#4178](https://github.com/CloudQuote/node-mysql2/issues/4178)) ([c06afc2](https://github.com/CloudQuote/node-mysql2/commit/c06afc254d3201b65c644b6cfc03f54e1edc5114))
+* **BaseConnection:** add state getter to track connection lifecycle ([#3958](https://github.com/CloudQuote/node-mysql2/issues/3958)) ([a394487](https://github.com/CloudQuote/node-mysql2/commit/a3944878cc0f7e8e4476699f8390f7cad0963770))
+* disable mysql_clear_password plugin by default ([#4236](https://github.com/CloudQuote/node-mysql2/issues/4236)) ([884bec5](https://github.com/CloudQuote/node-mysql2/commit/884bec56288d827939d0dd3f1f4ae476fbc8dbeb)), closes [#1617](https://github.com/CloudQuote/node-mysql2/issues/1617)
+* implement COM_RESET_CONNECTION with pool integration ([#4148](https://github.com/CloudQuote/node-mysql2/issues/4148)) ([49a64cc](https://github.com/CloudQuote/node-mysql2/commit/49a64cca26b32917ed671b3dbb4ac56d7316315b))
+* return unsafe integers inside JSON columns as exact strings with supportBigNumbers ([#4388](https://github.com/CloudQuote/node-mysql2/issues/4388)) ([a26ff14](https://github.com/CloudQuote/node-mysql2/commit/a26ff14089c093d28522acf7bd8d7dbb827ae0cc))
+* **sql-escaper:** add Temporal support when escaping values ([#4392](https://github.com/CloudQuote/node-mysql2/issues/4392)) ([6b933f6](https://github.com/CloudQuote/node-mysql2/commit/6b933f6d248b8fb5f3004d85d9562e9f5abdd16f))
+* support MariaDB data types (UUID, INET4, INET6, VECTOR, JSON) via extended type metadata; run CI against MariaDB ([#4373](https://github.com/CloudQuote/node-mysql2/issues/4373)) ([5034e57](https://github.com/CloudQuote/node-mysql2/commit/5034e5771929ce7499f6257035600dc88a442c71))
+* typed parameters, and adopt integer types the server reports ([#4488](https://github.com/CloudQuote/node-mysql2/issues/4488)) ([8ec20f1](https://github.com/CloudQuote/node-mysql2/commit/8ec20f1fa6348b2edd2402e9b7f301d99e2b9b98))
+* **types:** export ExecuteValues and QueryValues from entry point ([9fafd6f](https://github.com/CloudQuote/node-mysql2/commit/9fafd6f7a84f057371bcc77663de224e1e8b82fc))
+* use server's preferred auth method to eliminate auth switch roundtrip ([#4140](https://github.com/CloudQuote/node-mysql2/issues/4140)) ([b57c671](https://github.com/CloudQuote/node-mysql2/commit/b57c671c36ec5ce393ae84f821ead823913d730f))
+
+
+### Bug Fixes
+
+* add missing charset encoding for UTF8MB4_0900_BIN ([#3855](https://github.com/CloudQuote/node-mysql2/issues/3855)) ([c9a0dcd](https://github.com/CloudQuote/node-mysql2/commit/c9a0dcd90feba6dc802e1eb929a112310a6cef36))
+* allocate a new LOCAL INFILE terminator packet per write ([#4580](https://github.com/CloudQuote/node-mysql2/issues/4580)) ([8c068ef](https://github.com/CloudQuote/node-mysql2/commit/8c068efa427f1a6afef250beda6716b8520f07d9)), closes [#4568](https://github.com/CloudQuote/node-mysql2/issues/4568)
+* allow resetOnRelease in connection config validation ([#4278](https://github.com/CloudQuote/node-mysql2/issues/4278)) ([e72f923](https://github.com/CloudQuote/node-mysql2/commit/e72f923d20bcdf776ee4f29ed48c69ee47ebd483))
+* async stack traces not pointing to correct source, regression introduced by [#4257](https://github.com/CloudQuote/node-mysql2/issues/4257) ([#4265](https://github.com/CloudQuote/node-mysql2/issues/4265)) ([5b6206c](https://github.com/CloudQuote/node-mysql2/commit/5b6206c8818647e4babe706778fc00dcbd9983bd))
+* bound `null`-terminated string read to packet end (fixes a potential OOB read reported by Doruk Tan Ozturk (peaktwilight)) ([#4161](https://github.com/CloudQuote/node-mysql2/issues/4161)) ([91c5229](https://github.com/CloudQuote/node-mysql2/commit/91c5229dff2293953635b93f753b45bff31deac4))
+* **constants:** remove unsupported CLIENT_DEPRECATE_EOF flag from constants ([#4033](https://github.com/CloudQuote/node-mysql2/issues/4033)) ([46c3f60](https://github.com/CloudQuote/node-mysql2/commit/46c3f6036c07aa02b71adfc97b803e1066a8758b))
+* correct connectAttributes typo in ChangeUser packet ([#4423](https://github.com/CloudQuote/node-mysql2/issues/4423)) ([f64ce07](https://github.com/CloudQuote/node-mysql2/commit/f64ce07b5e143a50094b1be72faffea4a3baed28)), closes [#2140](https://github.com/CloudQuote/node-mysql2/issues/2140)
+* correct length-coded number size for the 3-byte range ([#4500](https://github.com/CloudQuote/node-mysql2/issues/4500)) ([de56272](https://github.com/CloudQuote/node-mysql2/commit/de5627288bc76be4ec92a8f08796b2814d26e8aa))
+* **deps:** include `@types/node` as a peer dependency ([#4108](https://github.com/CloudQuote/node-mysql2/issues/4108)) ([5f8ac97](https://github.com/CloudQuote/node-mysql2/commit/5f8ac97175f89888fec64304c9ce5d39a4ef473c))
+* distinguish delimiters in queries from SQL comments ([#4084](https://github.com/CloudQuote/node-mysql2/issues/4084)) ([454ba10](https://github.com/CloudQuote/node-mysql2/commit/454ba10fa2c38f746a9d7cdc0fd86ee0ffb9d863))
+* don't leave a failed `execute` as the active command ([#4425](https://github.com/CloudQuote/node-mysql2/issues/4425)) ([fbd64b6](https://github.com/CloudQuote/node-mysql2/commit/fbd64b6683a432c7d1c1e79cf1c3317f2916cd17))
+* expand object params after `ON DUPLICATE KEY UPDATE` preceded by `SET` ([#4076](https://github.com/CloudQuote/node-mysql2/issues/4076)) ([4d2b930](https://github.com/CloudQuote/node-mysql2/commit/4d2b9307507f2219492a253c10b5e36a1a4febde))
+* explicitly specify  in auth plugins ([#4175](https://github.com/CloudQuote/node-mysql2/issues/4175)) ([#4187](https://github.com/CloudQuote/node-mysql2/issues/4187)) ([5ac5563](https://github.com/CloudQuote/node-mysql2/commit/5ac5563c8c7d59da358e3f4ddbde2921eb5e0741))
+* fix `PoolConnection.end` callback and promise resolution ([#3937](https://github.com/CloudQuote/node-mysql2/issues/3937)) ([18ff2c6](https://github.com/CloudQuote/node-mysql2/commit/18ff2c6e802f4b827bfd9d6066af377b220404df))
+* fix precision loss for large decimal values ([#4135](https://github.com/CloudQuote/node-mysql2/issues/4135)) ([099beea](https://github.com/CloudQuote/node-mysql2/commit/099beeae0b9300a75162dde004c3e4e79eef99f0))
+* fix wrong length number write to packet ([#3177](https://github.com/CloudQuote/node-mysql2/issues/3177)) ([0e06e02](https://github.com/CloudQuote/node-mysql2/commit/0e06e02e376be549757046622d425095ed9e577b))
+* handle malformed geometry payloads (fixes a potential DoS vulnerability reported by Doruk Tan Ozturk (peaktwilight)) ([#4164](https://github.com/CloudQuote/node-mysql2/issues/4164)) ([1869215](https://github.com/CloudQuote/node-mysql2/commit/186921573096f5b9feccef93cf61f335e5372080))
+* honor query-level `namedPlaceholders` as `false` ([#4460](https://github.com/CloudQuote/node-mysql2/issues/4460)) ([20f732b](https://github.com/CloudQuote/node-mysql2/commit/20f732bbcb33b2e2d184130b94424b20c3745a50))
+* keep 00:00:00 time for TIMESTAMP in binary protocol with dateStrings ([#4327](https://github.com/CloudQuote/node-mysql2/issues/4327)) ([2af33a1](https://github.com/CloudQuote/node-mysql2/commit/2af33a117ac4fdee1f87537cb876df89a02ab2aa))
+* keep connectTimeout active until the handshake completes ([#4458](https://github.com/CloudQuote/node-mysql2/issues/4458)) ([508a731](https://github.com/CloudQuote/node-mysql2/commit/508a731eb077f6eba1a794a2e3506f04226a4f21))
+* keep leading zeros in TIME fractional seconds ([#4481](https://github.com/CloudQuote/node-mysql2/issues/4481)) ([3cccf4a](https://github.com/CloudQuote/node-mysql2/commit/3cccf4ab27218f4a16ccb256842a41e4bb3f03b6))
+* limit client flags to server capabilities ([#4227](https://github.com/CloudQuote/node-mysql2/issues/4227)) ([e1930b8](https://github.com/CloudQuote/node-mysql2/commit/e1930b80d9c80d7a482758e37305db215098c71e))
+* **named-placeholders:** improve handling of mixed/nested quotes in query parsing ([#4011](https://github.com/CloudQuote/node-mysql2/issues/4011)) ([3e00cd7](https://github.com/CloudQuote/node-mysql2/commit/3e00cd75b86c9f927bcf766529bd842bb936abf0))
+* **packet:** return INVALID_DATE for zero dates with numeric timezone offset ([#1019](https://github.com/CloudQuote/node-mysql2/issues/1019)) ([#4258](https://github.com/CloudQuote/node-mysql2/issues/4258)) ([cb5adcc](https://github.com/CloudQuote/node-mysql2/commit/cb5adccb3aed07ccb25a8f8e07c2cb3ffba90dd0))
+* **parser:** call typeCast for NULL values in the binary protocol ([#3368](https://github.com/CloudQuote/node-mysql2/issues/3368)) ([#4394](https://github.com/CloudQuote/node-mysql2/issues/4394)) ([01f1092](https://github.com/CloudQuote/node-mysql2/commit/01f10926baec7dffd73629feebbb56e98e616782))
+* **pool:** discard connection on error 1290 (Aurora read-only failure) ([#4075](https://github.com/CloudQuote/node-mysql2/issues/4075)) ([9188963](https://github.com/CloudQuote/node-mysql2/commit/91889638fcedb77457b17cf522a8ded843698802))
+* **pool:** give each pooled connection its own config copy ([#4473](https://github.com/CloudQuote/node-mysql2/issues/4473)) ([361d232](https://github.com/CloudQuote/node-mysql2/commit/361d232c4b6bd3afd048427da0c4af012488d031))
+* **pool:** handle all read-only errors during Aurora failover ([#4082](https://github.com/CloudQuote/node-mysql2/issues/4082)) ([ce98d8e](https://github.com/CloudQuote/node-mysql2/commit/ce98d8e8f20164ed0f78b58eb79ccedf44262d18))
+* **pool:** propagate query dispatch errors instead of throwing ([#4459](https://github.com/CloudQuote/node-mysql2/issues/4459)) ([7ce6943](https://github.com/CloudQuote/node-mysql2/commit/7ce69431a06ed8d36903f4dde94f8062367349ea))
+* **pool:** reject queued requests on end ([#4291](https://github.com/CloudQuote/node-mysql2/issues/4291)) ([fbff09c](https://github.com/CloudQuote/node-mysql2/commit/fbff09cb58eeae11179c05ef1ef6a07a78d53a29))
+* **pool:** resolve potential memory leak ([#4111](https://github.com/CloudQuote/node-mysql2/issues/4111)) ([8aa2052](https://github.com/CloudQuote/node-mysql2/commit/8aa205221683ea9160baa869a3b5db2a2c24741c))
+* prevent double release from corrupting the connection pool ([#4186](https://github.com/CloudQuote/node-mysql2/issues/4186)) ([7e57db6](https://github.com/CloudQuote/node-mysql2/commit/7e57db62f47b8bb968c15fb1ba0402927d47015a))
+* prevent query param override of `URL`-defined connection options (fixes a potential config injection vulnerability reported by Doruk Tan Ozturk (peaktwilight)) ([#4162](https://github.com/CloudQuote/node-mysql2/issues/4162)) ([3123b4e](https://github.com/CloudQuote/node-mysql2/commit/3123b4e686e4e7c3893b20773376aff2c31840f7))
+* **promise:** honour `trace: false` on every promise-API method ([#4502](https://github.com/CloudQuote/node-mysql2/issues/4502)) ([1dcd8ef](https://github.com/CloudQuote/node-mysql2/commit/1dcd8efe6c2a7079d3cc1db92e7a94008b7ed5b9)), closes [#4501](https://github.com/CloudQuote/node-mysql2/issues/4501)
+* **promise:** point rejection stacks at caller for promise API ([#4267](https://github.com/CloudQuote/node-mysql2/issues/4267)) ([c79a3f3](https://github.com/CloudQuote/node-mysql2/commit/c79a3f323f2919b33a11daa2177b818f37dc7996))
+* replace `denque` with a local ring buffer queue ([#4472](https://github.com/CloudQuote/node-mysql2/issues/4472)) ([88f3d9e](https://github.com/CloudQuote/node-mysql2/commit/88f3d9e87dd60398ed9a82e97e66ad72a9810ae8))
+* restore `PoolConnection` as subclass of `Connection` ([#4183](https://github.com/CloudQuote/node-mysql2/issues/4183)) ([97855a6](https://github.com/CloudQuote/node-mysql2/commit/97855a603d9e5472c292d732af68ca6aa8cc350d))
+* **security:** resolve a potential SQL injection bypass through objects ([#4054](https://github.com/CloudQuote/node-mysql2/issues/4054)) ([7f133cc](https://github.com/CloudQuote/node-mysql2/commit/7f133cc0a75f82e35a9dabc8102d1e7470df1117))
+* **sql-escaper:** resolve multi statement and expand object regressions ([#4380](https://github.com/CloudQuote/node-mysql2/issues/4380)) ([1b927a9](https://github.com/CloudQuote/node-mysql2/commit/1b927a92c1c0e59b00d3552786215fe249ef550f))
+* strip the brackets from an IPv6 host in a connection URI ([#4570](https://github.com/CloudQuote/node-mysql2/issues/4570)) ([b1c39c8](https://github.com/CloudQuote/node-mysql2/commit/b1c39c88a743df6b9bbe73703c9da29eba067204))
+* types for query values ([#3985](https://github.com/CloudQuote/node-mysql2/issues/3985)) ([a9c8d09](https://github.com/CloudQuote/node-mysql2/commit/a9c8d090e027e7597559e608e6e831d8d714c642))
+* **types:** add `supportBigNumbers`, `bigNumberStrings`, `dateStrings`, and `timezone` options to `QueryOptions` ([#4127](https://github.com/CloudQuote/node-mysql2/issues/4127)) ([b274e72](https://github.com/CloudQuote/node-mysql2/commit/b274e725afcb2c52c73867f9fa68e9dd1cf7890a))
+* **types:** add missing `ConnectionState` type to Promise Connection interface ([#4034](https://github.com/CloudQuote/node-mysql2/issues/4034)) ([2927949](https://github.com/CloudQuote/node-mysql2/commit/2927949ded2b7e3b33cb6439bf0222d78016350c))
+* **types:** ensure optional params in `query` and `execute` methods ([#4123](https://github.com/CloudQuote/node-mysql2/issues/4123)) ([3f4bbca](https://github.com/CloudQuote/node-mysql2/commit/3f4bbca38e8dcab4344841653cd26493b44a84f3))
+* **types:** extend `QueryValues` to callback-based methods ([#4129](https://github.com/CloudQuote/node-mysql2/issues/4129)) ([2ad5f0b](https://github.com/CloudQuote/node-mysql2/commit/2ad5f0b2eb693935f9d807c60818533dd45e1f6c))
+* **types:** improve `ExecuteValues` "nested" params ([#4133](https://github.com/CloudQuote/node-mysql2/issues/4133)) ([3f94950](https://github.com/CloudQuote/node-mysql2/commit/3f94950dea6fed36d6fc0a0a53feeb3a99fa01e3))
+* **types:** support `Raw` and `Uint8Array` params ([#4132](https://github.com/CloudQuote/node-mysql2/issues/4132)) ([bde9aec](https://github.com/CloudQuote/node-mysql2/commit/bde9aec815d723e6f632dfb272e78566111648c0))
+* **typings:** align callback Pool and PoolConnection types with runtime ([#4478](https://github.com/CloudQuote/node-mysql2/issues/4478)) ([8b1f829](https://github.com/CloudQuote/node-mysql2/commit/8b1f829d3706404ab372cf97bd77ebcf86578d97))
+* **typings:** PoolCluster node events emit a string nodeId ([#4513](https://github.com/CloudQuote/node-mysql2/issues/4513)) ([1281e1e](https://github.com/CloudQuote/node-mysql2/commit/1281e1eab672b2bde0b859efa38be5ed5a6946a5))
+* use Number.isSafeInteger for supportBigNumbers boundary check ([#4225](https://github.com/CloudQuote/node-mysql2/issues/4225)) ([295264b](https://github.com/CloudQuote/node-mysql2/commit/295264b2df30ac4a378fd65d7d0e40911f70d184))
+* validate buffer bounds in geometry parser (fixes a potential DoS vulnerability reported by Doruk Tan Ozturk (peaktwilight)) ([#4159](https://github.com/CloudQuote/node-mysql2/issues/4159)) ([7c2ae00](https://github.com/CloudQuote/node-mysql2/commit/7c2ae002a5e1708d0a0a757bedd00c7e16ae2eee))
+* zero dates come back as "undefined 00:00:00" with dateStrings ([#4491](https://github.com/CloudQuote/node-mysql2/issues/4491)) ([5bf7bda](https://github.com/CloudQuote/node-mysql2/commit/5bf7bda73cca5bbea4cdcd27ad8223a10ae41ecf))
+
+
+### Performance Improvements
+
+* defer Error object creation to error handlers in promise wrappers ([#4257](https://github.com/CloudQuote/node-mysql2/issues/4257)) ([ab131de](https://github.com/CloudQuote/node-mysql2/commit/ab131de5611c70d7ef68b7c880ba693b47a687d2))
+* per-query overhead, local dates, short strings, TLS context and compression ([#4522](https://github.com/CloudQuote/node-mysql2/issues/4522)) ([2387daf](https://github.com/CloudQuote/node-mysql2/commit/2387daf8dc8403783f4238aef4ba22e103cc2fec))
+* remove per-query and per-row allocation hotspots ([#4486](https://github.com/CloudQuote/node-mysql2/issues/4486)) ([c86fe5a](https://github.com/CloudQuote/node-mysql2/commit/c86fe5a721048a5419e775e3d6ce2defec14a774))
+* reuse TLS sessions across connections to the same server ([#4529](https://github.com/CloudQuote/node-mysql2/issues/4529)) ([9178c82](https://github.com/CloudQuote/node-mysql2/commit/9178c824cf4a7c04c0e04b0586661c56b694056f))
+* serialize COM_STMT_EXECUTE in a single exact-size pass ([#4494](https://github.com/CloudQuote/node-mysql2/issues/4494)) ([f3a60bc](https://github.com/CloudQuote/node-mysql2/commit/f3a60bca1f1b29634e8956116784bfd6e0ab2db6))
+* single-pass utf8 string encoding for outgoing packets ([#4495](https://github.com/CloudQuote/node-mysql2/issues/4495)) ([183e947](https://github.com/CloudQuote/node-mysql2/commit/183e947e753c6bdd1a0c1d2db84ed6ae2e3000af))
+
+
+### Miscellaneous Chores
+
+* release 3.17.0 ([a140424](https://github.com/CloudQuote/node-mysql2/commit/a140424223e48aa0fae7842be1a6169514678aa4))
+
 ## [3.24.6](https://github.com/sidorares/node-mysql2/compare/v3.24.5...v3.24.6) (2026-10-13)
 
 
