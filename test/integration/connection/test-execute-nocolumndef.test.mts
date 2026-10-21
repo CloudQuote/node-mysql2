@@ -8,7 +8,7 @@ import process from 'node:process';
 // @ts-expect-error: no typings available
 import strict from 'assert-diff';
 import { describe, it, skip } from 'poku';
-import { createConnection } from '../../common.test.mjs';
+import { createConnection, getMysqlVersion } from '../../common.test.mjs';
 
 if (`${process.env.MYSQL_CONNECTION_URL}`.includes('pscale_pw_')) {
   skip('Skipping test for PlanetScale: different error codes');
@@ -194,21 +194,86 @@ const expectedFields = [
   },
 ];
 
+// MariaDB's EXPLAIN has no partitions/filtered columns and reports most
+// columns as VAR_STRING
+const mariadbTextField = (name: string, flags: number) => ({
+  catalog: 'def',
+  schema: '',
+  name,
+  orgName: '',
+  table: '',
+  orgTable: '',
+  characterSet: 224,
+  encoding: 'utf8',
+  type: 253,
+  flags,
+  decimals: 39,
+});
+
+const expectedRowsMariaDB = [
+  {
+    id: 1,
+    select_type: 'SIMPLE',
+    table: null,
+    type: null,
+    possible_keys: null,
+    key: null,
+    key_len: null,
+    ref: null,
+    rows: null,
+    Extra: 'No tables used',
+  },
+];
+
+const expectedFieldsMariaDB = [
+  {
+    catalog: 'def',
+    schema: '',
+    name: 'id',
+    orgName: '',
+    table: '',
+    orgTable: '',
+    characterSet: 63,
+    encoding: 'binary',
+    type: 8,
+    flags: 160,
+    decimals: 0,
+  },
+  mariadbTextField('select_type', 1),
+  mariadbTextField('table', 0),
+  mariadbTextField('type', 0),
+  mariadbTextField('possible_keys', 0),
+  mariadbTextField('key', 0),
+  mariadbTextField('key_len', 0),
+  mariadbTextField('ref', 0),
+  mariadbTextField('rows', 0),
+  mariadbTextField('Extra', 1),
+];
+
 await describe('Execute No Column Definition', async () => {
   const connection = createConnection();
+  const { isMariaDB } = await getMysqlVersion(connection);
+  const rowsExpectation = isMariaDB ? expectedRowsMariaDB : expectedRows;
+  const fieldsExpectation = isMariaDB ? expectedFieldsMariaDB : expectedFields;
+  // MySQL 9.5 changed the default explain_format from TRADITIONAL to TREE,
+  // whose output is not deterministic; pin the tabular format the assertions
+  // expect. MariaDB has no explain_format and stays tabular by default.
+  const explainQuery = isMariaDB
+    ? 'explain SELECT 1'
+    : 'explain format=traditional SELECT 1';
 
   await it('should handle explain with no column definitions', async () => {
     const [rows, fields] = await new Promise<[RowDataPacket[], FieldPacket[]]>(
       (resolve, reject) => {
         connection.execute<RowDataPacket[]>(
-          'explain SELECT 1',
+          explainQuery,
           (err, _rows, _fields) =>
             err ? reject(err) : resolve([_rows, _fields])
         );
       }
     );
 
-    strict.deepEqual(rows, expectedRows);
+    strict.deepEqual(rows, rowsExpectation);
     fields.forEach((f: FieldPacket, index: number) => {
       // @ts-expect-error: TODO: implement typings
       const fi = f.inspect();
@@ -217,9 +282,9 @@ await describe('Execute No Column Definition', async () => {
 
       strict.deepEqual(
         Object.keys(fi).sort(),
-        Object.keys(expectedFields[index]).sort()
+        Object.keys(fieldsExpectation[index]).sort()
       );
-      strict.deepEqual(expectedFields[index], fi);
+      strict.deepEqual(fieldsExpectation[index], fi);
     });
   });
 
